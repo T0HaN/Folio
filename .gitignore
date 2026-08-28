@@ -1,0 +1,28 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# === Переменные окружения и секреты ===
+.env
+.env.*
+!.env.example
+
+# === Данные пользователей (не должны попадать в git) ===
+data/user_data/
+
+# === IDE и ОС ===
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# === Логи и временные файлы ===
+*.log
