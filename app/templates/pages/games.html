@@ -103,26 +103,24 @@
     </section>
 
     <!-- Модальные окна -->
-    {% include 'components/modal.html' with {
-        'modal_id': 'modal-create',
-        'modal_title': 'Создать новую игру',
-        'modal_form_action': '/master/room/create',
-        'modal_fields': [
-            {'name': 'name', 'label': 'Название кампании', 'type': 'text', 'placeholder': 'Проклятие Страда...', 'required': true},
-            {'name': 'max_players', 'label': 'Количество игроков (макс. 10)', 'type': 'number', 'required': true}
-        ],
-        'modal_submit_text': 'Создать чертог'
-    } %}
+    {% set modal_id = 'modal-create' %}
+    {% set modal_title = 'Создать новую игру' %}
+    {% set modal_form_action = '/master/room/create' %}
+    {% set modal_fields = [
+        {'name': 'name', 'label': 'Название кампании', 'type': 'text', 'placeholder': 'Проклятие Страда...', 'required': true},
+        {'name': 'max_players', 'label': 'Количество игроков (макс. 10)', 'type': 'number', 'required': true}
+    ] %}
+    {% set modal_submit_text = 'Создать чертог' %}
+    {% include 'components/modal.html' %}
 
-    {% include 'components/modal.html' with {
-        'modal_id': 'modal-join',
-        'modal_title': 'Присоединиться к игре',
-        'modal_form_action': '/room/join',
-        'modal_fields': [
-            {'name': 'invite_code', 'label': 'Код приглашения', 'type': 'text', 'placeholder': 'Например: aB3xY9', 'required': true}
-        ],
-        'modal_submit_text': 'Войти в комнату'
-    } %}
+    {% set modal_id = 'modal-join' %}
+    {% set modal_title = 'Присоединиться к игре' %}
+    {% set modal_form_action = '/room/join' %}
+    {% set modal_fields = [
+        {'name': 'invite_code', 'label': 'Код приглашения', 'type': 'text', 'placeholder': 'Например: aB3xY9', 'required': true}
+    ] %}
+    {% set modal_submit_text = 'Войти в комнату' %}
+    {% include 'components/modal.html' %}
 {% endblock %}
 
 {% block scripts %}

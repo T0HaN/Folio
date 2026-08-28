@@ -95,7 +95,7 @@ async def games_dashboard(request: Request, current_user: dict = Depends(get_cur
     # Передаём данные в новый шаблон
     return templates.TemplateResponse(
         request=request,
-        name="games.html",
+        name="pages/games.html",
         context={
             "master_rooms": master_rooms,
             "player_rooms": player_rooms,

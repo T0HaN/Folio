@@ -157,3 +157,14 @@ async function uploadToken(event) {
     };
     reader.readAsDataURL(file);
 }
+
+// ===== ГЛОБАЛЬНЫЙ ЭКСПОРТ =====
+// Функции вызываются из inline onclick в шаблоне, поэтому
+// их нужно явно пробросить в глобальную область видимости.
+window.rollStatCheck = rollStatCheck;
+window.rollSave = rollSave;
+window.rollSkill = rollSkill;
+window.rollAttack = rollAttack;
+window.rollDamage = rollDamage;
+window.clearDiceLog = clearDiceLog;
+window.uploadToken = uploadToken;

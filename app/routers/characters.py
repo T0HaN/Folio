@@ -55,7 +55,7 @@ async def chars_list(request: Request, current_user: dict = Depends(require_play
     chars = character_service.load_chars(current_user['username'])
     quote_text = get_random_quote()
 
-    return templates.TemplateResponse(request, "CharList1.html", context={
+    return templates.TemplateResponse(request, "pages/characters.html", context={
         "chars": chars,
         "username": current_user['username'],
         "role": current_user.get('role', 'player'),
@@ -218,7 +218,7 @@ async def view_char(char_id: int, request: Request, current_user: dict = Depends
     xp_progress = character_service.get_level_progress(current_xp, current_level)
     next_level_xp = XP_THRESHOLDS[current_level] if current_level < 20 else "MAX"
 
-    return templates.TemplateResponse(request, "character_view.html", context={
+    return templates.TemplateResponse(request, "pages/character.html", context={
         "char": char,
         "saves": saves,
         "skills": skills,
