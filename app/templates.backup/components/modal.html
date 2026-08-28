@@ -1,0 +1,55 @@
+<!--
+  components/modal.html
+  Параметры:
+    - modal_id: уникальный id модального окна (обязательно)
+    - modal_title: заголовок (обязательно)
+    - modal_content: содержимое (если простая строка)
+    - modal_form_action: URL для POST-отправки (опционально)
+    - modal_fields: список словарей с полями формы (если есть форма)
+      каждый словарь: { 'label': '...', 'name': '...', 'type': 'text', 'placeholder': '...', 'required': true, 'options': [...] }
+-->
+<div class="modal-overlay" id="{{ modal_id }}">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModal('{{ modal_id }}')">×</button>
+        <h3 class="modal-title">{{ modal_title }}</h3>
+
+        {% if modal_form_action %}
+        <form action="{{ modal_form_action }}" method="POST">
+            {% if modal_fields %}
+            {% for field in modal_fields %}
+            <div class="form-group">
+                {% if field.label %}
+                <label for="{{ field.name }}">{{ field.label }}</label>
+                {% endif %}
+
+                {% if field.type == 'select' and field.options %}
+                <select id="{{ field.name }}" name="{{ field.name }}" {% if field.required %}required{% endif %}>
+                    {% for opt in field.options %}
+                    <option value="{{ opt.value }}" {% if opt.selected %}selected{% endif %}>{{ opt.label }}</option>
+                    {% endfor %}
+                </select>
+                {% else %}
+                <input
+                    type="{{ field.type or 'text' }}"
+                    id="{{ field.name }}"
+                    name="{{ field.name }}"
+                    placeholder="{{ field.placeholder or '' }}"
+                    {% if field.required %}required{% endif %}
+                    autocomplete="off"
+                >
+                {% endif %}
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            {% if modal_submit_text %}
+            <button type="submit" class="btn primary">{{ modal_submit_text }}</button>
+            {% endif %}
+        </form>
+        {% endif %}
+
+        {% if modal_content %}
+        <div class="modal-body">{{ modal_content }}</div>
+        {% endif %}
+    </div>
+</div>

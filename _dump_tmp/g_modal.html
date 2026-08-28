@@ -1,0 +1,45 @@
+        </div>
+
+        <!-- АЛЕРТЫ ОШИБОК И УСПЕХА -->
+        {% if error %}
+            <div class="alert alert-error">{{ error }}</div>
+        {% endif %}
+        {% if success %}
+            <div class="alert alert-success">{{ success }}</div>
+        {% endif %}
+
+        <!-- ШАПКА ИГРОВОЙ ПАНЕЛИ -->
+        <div class="page-header-wrapper">
+            <header>
+                <h2 class="page-title">Мои кампании</h2>
+                <p class="page-subtitle">Управляйте мирами, которые вы создали, и приключениями, в которых участвуете.</p>
+            </header>
+            <div class="header-actions">
+                <button class="btn btn-outline" onclick="openModal('modal-join')">🚪 Присоединиться</button>
+                <button class="btn btn-primary" onclick="openModal('modal-create')">📜 Создать игру</button>
+            </div>
+        </div>
+
+        <!-- СЕКЦИЯ 1: МАСТЕР (Где я веду) -->
+        <h3 class="section-title">👑 Игры, которые я веду</h3>
+        <div class="games-grid">
+            {% if master_rooms %}
+                {% for room in master_rooms %}
+                <div class="game-card">
+                    <div class="game-header">
+                        <h4 class="game-title">{{ room.name }}</h4>
+                        <div class="game-status" title="Активна"></div>
+                    </div>
+                    <div class="game-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Игроков:</span>
+                            <span class="meta-value">0 / {{ room.max_players }}</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Код приглашения:</span>
+                            <span class="code-box">{{ room.invite_code }}</span>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <a href="/master/room/{{ room.id }}" class="btn-card enter">Войти как Мастер</a>
+                        <a href="/master/prep/{{ room.id }}" class="btn-card">⚙️</a>

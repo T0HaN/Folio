@@ -1,0 +1,127 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Панель управления | Folio{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', path='css/pages/dashboard.css') }}">
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'components/sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+    <!-- Верхняя часть: приветствие и быстрые действия -->
+    <div class="page-header">
+        <h1 class="page-title">Добро пожаловать, {{ username|default('Путник') }}!</h1>
+        <p class="page-subtitle">Твои приключения начинаются здесь. Куда направимся?</p>
+    </div>
+
+    <!-- Сетка карточек -->
+    <div class="dashboard-grid">
+        <!-- 1. Персонажи -->
+        <div class="card interactive">
+            <div class="card-header">
+                <span class="card-icon">⚔️</span>
+                <h3 class="card-title">Мои герои</h3>
+            </div>
+            <p class="card-desc">Просматривай, редактируй и развивай своих персонажей.</p>
+            <div class="action-list">
+                <a href="/chars" class="btn-action highlight">
+                    <span>📜 Список героев</span>
+                    <span>→</span>
+                </a>
+                <a href="/char/create" class="btn-action">
+                    <span>🆕 Создать нового</span>
+                    <span>+</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- 2. Игры / Кампании -->
+        <div class="card interactive">
+            <div class="card-header">
+                <span class="card-icon">🗺️</span>
+                <h3 class="card-title">Мои кампании</h3>
+            </div>
+            <p class="card-desc">Единый хаб. Управляйте мирами, которые вы создали, и приключениями, к которым присоединились.</p>
+            <div class="action-list">
+                <a href="/games" class="btn-action highlight">
+                    <span>🧭 Открыть список игр</span>
+                    <span>→</span>
+                </a>
+                <button class="btn-action" onclick="openModal('modal-create')">
+                    <span>📜 Создать новую игру</span>
+                    <span>→</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 3. Кузня контента -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-icon">⚒️</span>
+                <h3 class="card-title">Кузня контента</h3>
+                <span class="badge">В разработке</span>
+            </div>
+            <p class="card-desc">Встроенный Homebrew-редактор. Создавайте кастомные заклинания, уникальных монстров и свои собственные классы.</p>
+            <div class="action-list">
+                <div class="btn-action disabled">
+                    <span>🐉 Бестиарий</span>
+                    <span>🔒</span>
+                </div>
+                <div class="btn-action disabled">
+                    <span>✨ Книга заклинаний</span>
+                    <span>🔒</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Магазин -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-icon">💎</span>
+                <h3 class="card-title">Лавка древностей</h3>
+                <span class="badge">В разработке</span>
+            </div>
+            <p class="card-desc">Маркетплейс ассетов для ваших игр. Покупайте новые скины для кубиков, токены персонажей и готовые приключения.</p>
+            <div class="action-list">
+                <div class="btn-action disabled">
+                    <span>🎲 Наборы кубиков</span>
+                    <span>🔒</span>
+                </div>
+                <div class="btn-action disabled">
+                    <span>🖼️ Пакеты токенов и карт</span>
+                    <span>🔒</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальные окна (компоненты) -->
+    {% include 'components/modal.html' with {
+        'modal_id': 'modal-join',
+        'modal_title': 'Присоединиться к игре',
+        'modal_form_action': '/room/join',
+        'modal_fields': [
+            {'name': 'invite_code', 'label': 'Код приглашения', 'type': 'text', 'placeholder': 'Например: aB3xY9', 'required': true}
+        ],
+        'modal_submit_text': 'Войти в комнату'
+    } %}
+
+    {% include 'components/modal.html' with {
+        'modal_id': 'modal-create',
+        'modal_title': 'Создать новую игру',
+        'modal_form_action': '/master/room/create',
+        'modal_fields': [
+            {'name': 'name', 'label': 'Название кампании', 'type': 'text', 'placeholder': 'Проклятие Страда...', 'required': true},
+            {'name': 'max_players', 'label': 'Количество игроков (макс. 10)', 'type': 'number', 'required': true}
+        ],
+        'modal_submit_text': 'Создать чертог'
+    } %}
+{% endblock %}
+
+{% block scripts %}
+    <!-- Скрипты для модалок и мобильного меню -->
+    <script type="module" src="{{ url_for('static', path='js/pages/dashboard.js') }}"></script>
+{% endblock %}

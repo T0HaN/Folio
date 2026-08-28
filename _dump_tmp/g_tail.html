@@ -1,0 +1,85 @@
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-icon">🗺️</div>
+                    <p>У вас пока нет созданных миров.</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- СЕКЦИЯ 2: ИГРОК (Где я играю) -->
+        <h3 class="section-title">⚔️ Игры, в которых я участвую</h3>
+        <div class="games-grid">
+            {% if player_rooms %}
+                {% for room in player_rooms %}
+                <div class="game-card">
+                    <div class="game-header">
+                        <h4 class="game-title">{{ room.name }}</h4>
+                        <div class="game-status" title="Активна"></div>
+                    </div>
+                    <div class="game-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Мастер:</span>
+                            <span class="meta-value">...</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Мой персонаж:</span>
+                            <span class="meta-value" style="color: var(--accent-gold);">{{ room.char_name }}</span>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <!-- 🆕 Исправлен путь на /player/room/ -->
+                        <a href="/player/room/{{ room.id }}" class="btn-card enter">Войти в игру</a>
+                        <a href="#" class="btn-card" title="Покинуть группу" style="flex: 0.3; color: var(--accent-red);">🚪</a>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-icon">🏕️</div>
+                    <p>Вы пока не присоединились ни к одной кампании.</p>
+                </div>
+            {% endif %}
+        </div>
+
+    </main>
+
+    <!-- БОКОВОЕ МЕНЮ (СПРАВА) -->
+    <aside class="sidebar" id="sidebar">
+        <!-- ПРОФИЛЬ -->
+        <div class="user-profile">
+            <div class="user-avatar">🎭</div>
+            <div class="user-info">
+                <div class="user-name">{{ username }}</div>
+                <a href="/logout" class="user-logout">Покинуть таверну</a>
+            </div>
+        </div>
+
+        <nav class="nav-menu">
+            <a href="/dashboard" class="nav-item">
+                <span class="nav-icon">🧭</span>
+                <span>Сводка</span>
+            </a>
+            <a href="/chars" class="nav-item">
+                <span class="nav-icon">🛡️</span>
+                <span>Мои персонажи</span>
+            </a>
+            <!-- Внимание! Эта вкладка теперь активна и ведет на /games -->
+            <a href="/games" class="nav-item active">
+                <span class="nav-icon">🗺️</span>
+                <span>Мои игры</span>
+            </a>
+            <a href="#" class="nav-item" style="opacity: 0.5; pointer-events: none;">
+                <span class="nav-icon">⚒️</span>
+                <span>Кузня (Скоро)</span>
+            </a>
+            <a href="#" class="nav-item" style="opacity: 0.5; pointer-events: none;">
+                <span class="nav-icon">💎</span>
+                <span>Лавка (Скоро)</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- МОДАЛЬНЫЕ ОКНА ДЛЯ ИГР -->

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Folio • D&D Manager{% endblock %}</title>
+    <link rel="icon" href="{{ url_for('static', path='images/Logo.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/main.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <!-- Боковая панель (sidebar) – пока заглушка, будет вынесена позже -->
+    {% block sidebar %}
+        {# по умолчанию пусто, можно переопределить или включить компонент #}
+    {% endblock %}
+
+    <main class="main-content">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Основной JS-файл -->
+    <script type="module" src="{{ url_for('static', path='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

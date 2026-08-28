@@ -1,0 +1,18 @@
+/* ============================================================
+   components/footer.css
+   Стили для подвала страницы.
+   ============================================================ */
+
+.footer {
+    margin-top: 3rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+.footer p {
+    margin: 0;
+}

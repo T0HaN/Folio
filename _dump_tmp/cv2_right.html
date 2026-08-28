@@ -1,0 +1,141 @@
+                    <!-- Правая колонка -->
+                    <div class="column">
+                        <!-- Здоровье -->
+                        <section class="section">
+                            <h2 class="section-title">Здоровье</h2>
+                            <div class="hp-box">
+                                <div class="hp-current">{{ char.hp.current }}</div>
+                                <div class="hp-label">текущие хиты</div>
+                                <div class="hp-label" style="color: var(--accent-gold); margin-top: 0.5rem;">{{ char.hp.max }} максимум</div>
+                                {% if char.hp.temp > 0 %}
+                                <div class="hp-temp">+{{ char.hp.temp }} временные хиты</div>
+                                {% endif %}
+                            </div>
+                        </section>
+
+                        <!-- Атрибуты -->
+                        <!-- Атрибуты -->
+                        <section class="section">
+                            <h2 class="section-title">Атрибуты</h2>
+                            <div class="ac-card">
+                                <div class="ac-value">{{ char._calculated_ac }}</div>
+                                <div class="ac-label">Класс брони</div>
+                                {% set equipped_armor = char.inventory.armor | selectattr('equipped', 'equalto', true) | list %}
+                                {% if equipped_armor %}
+                                <div style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-secondary); font-style: italic;">({{ equipped_armor[0].name }})</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="attr-grid">
+                                <div class="attr-item">
+                                    <div class="attr-label">Инициатива</div>
+                                    <div class="attr-value">{{ char.attributes.initiative }}</div>
+                                </div>
+                                <div class="attr-item">
+                                    <div class="attr-label">Скорость</div>
+                                    <div class="attr-value">
+                                        {{ char.attributes.effective_speed if char.attributes.effective_speed is defined else char.attributes.speed }}
+                                        {% if char._carry and char._carry.speed_penalty > 0 and char._carry.speed_penalty < 999 %}
+                                            <span style="font-size: 0.7rem; color: var(--accent-red); display: block;">(−{{ char._carry.speed_penalty }})</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="attr-item">
+                                    <div class="attr-label">Мастерство</div>
+                                    <div class="attr-value">{{ char.attributes.prof_bonus }}</div>
+                                </div>
+                            </div>
+
+                            <!-- 🔥 Блок грузоподъёмности -->
+                            {% if char._carry %}
+                            <div style="margin-top: 1rem; padding: 1rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                    <div style="font-size: 0.85rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em;">
+                                        ⚖️ Нагрузка
+                                    </div>
+                                    <div style="font-size: 0.9rem; font-weight: bold;
+                                                {% if char._carry.encumbrance_level == 0 %}color: var(--accent-green);
+                                                {% elif char._carry.encumbrance_level == 1 %}color: #d4a94a;
+                                                {% elif char._carry.encumbrance_level == 2 %}color: #d47a4a;
+                                                {% else %}color: var(--accent-red);{% endif %}">
+                                        {{ char._carry.encumbrance_name }}
+                                    </div>
+                                </div>
+
+                                <!-- Прогресс-бар -->
+                                <div style="position: relative; height: 14px; background: var(--bg-tertiary); border-radius: 7px; overflow: hidden; border: 1px solid var(--border-color);">
+                                    <!-- Пороги -->
+                                    {% set max_w = char._carry.thresholds.max %}
+                                    {% set pct_light = (char._carry.thresholds.light / max_w * 100) if max_w > 0 else 0 %}
+                                    {% set pct_medium = (char._carry.thresholds.medium / max_w * 100) if max_w > 0 else 0 %}
+                                    {% set pct_heavy = (char._carry.thresholds.heavy / max_w * 100) if max_w > 0 else 0 %}
+                                    {% set pct_current = (char._carry.current_weight / max_w * 100) if max_w > 0 else 0 %}
+                                    {% set pct_current = [pct_current, 100] | min %}
+
+                                    <!-- Заполнение -->
+                                    <div style="position: absolute; top: 0; left: 0; height: 100%; width: {{ pct_current }}%;
+                                                {% if char._carry.encumbrance_level == 0 %}background: linear-gradient(90deg, var(--accent-green), #6a9b6a);
+                                                {% elif char._carry.encumbrance_level == 1 %}background: linear-gradient(90deg, #d4a94a, #c9944a);
+                                                {% elif char._carry.encumbrance_level == 2 %}background: linear-gradient(90deg, #d47a4a, #c9604a);
+                                                {% else %}background: linear-gradient(90deg, var(--accent-red), #6b2a2a);{% endif %}
+                                                transition: width 0.3s ease;">
+                                    </div>
+
+                                    <!-- Маркеры порогов -->
+                                    <div style="position: absolute; left: {{ pct_light }}%; top: 0; height: 100%; width: 1px; background: rgba(255,255,255,0.3);"></div>
+                                    <div style="position: absolute; left: {{ pct_medium }}%; top: 0; height: 100%; width: 1px; background: rgba(255,255,255,0.3);"></div>
+                                    <div style="position: absolute; left: {{ pct_heavy }}%; top: 0; height: 100%; width: 1px; background: rgba(255,255,255,0.3);"></div>
+                                </div>
+
+                                <!-- Числовые значения -->
+                                <div style="display: flex; justify-content: space-between; margin-top: 0.5rem; font-size: 0.8rem; color: var(--text-secondary);">
+                                    <span><strong style="color: var(--text-primary);">{{ char._carry.current_weight }}</strong> / {{ char._carry.max_capacity }} фнт.</span>
+                                    <span>Макс. подъём: <strong style="color: var(--accent-gold);">{{ char._carry.push_drag_lift }}</strong> фнт.</span>
+                                </div>
+
+                                <!-- Предупреждения -->
+                                {% if char._carry.encumbrance_level == 1 %}
+                                <div style="margin-top: 0.5rem; font-size: 0.8rem; color: #d4a94a;">
+                                    ⚠️ Скорость снижена на 10 футов
+                                </div>
+                                {% elif char._carry.encumbrance_level == 2 %}
+                                <div style="margin-top: 0.5rem; font-size: 0.8rem; color: #d47a4a;">
+                                    ⚠️ Скорость −20 фт., помеха на проверки Силы/Ловкости/Телосложения
+                                </div>
+                                {% elif char._carry.encumbrance_level == 3 %}
+                                <div style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--accent-red); font-weight: bold;">
+                                    ⛔ Превышен максимум! Персонаж не может двигаться
+                                </div>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                        </section>
+
+                        <!-- ===== АКТИВНЫЙ ИНВЕНТАРЬ ===== -->
+                        <!-- Токен персонажа -->
+                        <section class="section">
+                            <h2 class="section-title">🎭 Токен на карте</h2>
+                            <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                                <div id="token-preview" style="
+                                    width: 80px; height: 80px;
+                                    background: var(--bg-primary);
+                                    border: 2px dashed var(--border-color);
+                                    border-radius: 8px;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    overflow: hidden;
+                                    flex-shrink: 0;
+                                    {% if char.token_image %}border-style: solid; border-color: var(--accent-gold);{% endif %}
+                                ">
+                                    {% if char.token_image %}
+                                        <img src="{{ char.token_image }}" alt="Token" style="width: 100%; height: 100%; object-fit: cover;">
+                                    {% else %}
+                                        <span style="color: var(--text-secondary); font-size: 0.75rem; text-align: center;">Нет<br>токена</span>
+                                    {% endif %}
+                                </div>
+                                <div style="flex: 1;">
+                                    <label for="token-upload" class="nav-btn" style="display: inline-block; margin-bottom: 0.5rem; cursor: pointer;">
+                                        📤 Загрузить токен
+                                    </label>
+                                    <input type="file" id="token-upload" accept="image/*" style="display: none;" onchange="uploadToken(event)">

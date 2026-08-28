@@ -1,0 +1,45 @@
+<!--
+  components/sidebar.html
+  Боковая панель навигации (Dashboard / Menu).
+  Используется в страницах, требующих бокового меню.
+  Вызов: {% include 'components/sidebar.html' %}
+-->
+<aside class="sidebar" id="sidebar">
+    <!-- Бренд / Логотип -->
+    <div class="sidebar-brand">
+        <a href="/" class="sidebar-logo">
+            <img src="{{ url_for('static', path='images/Folio.png') }}" alt="Folio" class="sidebar-logo-img">
+        </a>
+    </div>
+
+    <!-- Навигация -->
+    <nav class="sidebar-nav">
+        <a href="/" class="nav-link {% if request.url.path == '/' %}active{% endif %}" title="Главная">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Главная</span>
+        </a>
+        <a href="/chars" class="nav-link {% if request.url.path == '/chars' %}active{% endif %}" title="Персонажи">
+            <span class="nav-icon">📜</span>
+            <span class="nav-label">Герои</span>
+        </a>
+        <a href="/games" class="nav-link {% if request.url.path == '/games' %}active{% endif %}" title="Игры">
+            <span class="nav-icon">🎲</span>
+            <span class="nav-label">Игры</span>
+        </a>
+        <a href="/profile" class="nav-link {% if request.url.path == '/profile' %}active{% endif %}" title="Профиль">
+            <span class="nav-icon">👤</span>
+            <span class="nav-label">Профиль</span>
+        </a>
+    </nav>
+
+    <!-- Нижняя часть / Выход -->
+    <div class="sidebar-footer">
+        <a href="/logout" class="nav-link logout" title="Выйти">
+            <span class="nav-icon">🚪</span>
+            <span class="nav-label">Выход</span>
+        </a>
+    </div>
+
+    <!-- Мобильная кнопка для открытия меню -->
+    <button class="mobile-menu-btn" id="menu-toggle">☰</button>
+</aside>

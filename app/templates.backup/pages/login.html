@@ -1,0 +1,74 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Вход в Folio • D&D Manager{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', path='css/pages/login.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="header">
+        <h1 class="realm-title">Folio</h1>
+        <p class="subtitle">Твой путь к приключениям</p>
+    </div>
+
+    <!-- Сообщения об ошибках/успехе -->
+    {% if error %}
+    <div class="messages">
+        <div class="msg msg-error" role="alert">{{ error }}</div>
+    </div>
+    {% endif %}
+
+    {% if success %}
+    <div class="messages">
+        <div class="msg msg-success" role="alert">{{ success }}</div>
+    </div>
+    {% endif %}
+
+    <form id="auth-form" method="POST" action="/login">
+        <input type="hidden" id="action-input" name="action" value="login">
+
+        <!-- Имя пользователя -->
+        <div class="form-group">
+            <label for="username">Имя героя</label>
+            <input type="text" id="username" name="username" placeholder="Введи своё имя..." required autofocus>
+        </div>
+
+        <!-- Пароль -->
+        <div class="form-group">
+            <label for="password">Пароль</label>
+            <input type="password" id="password" name="password" placeholder="••••••••" required>
+        </div>
+
+        <!-- Email (скрыт в режиме входа) -->
+        <div class="form-group" id="email-group" style="display: none;">
+            <label for="email">Электронная почта</label>
+            <input type="email" id="email" name="email" placeholder="mail@example.com">
+        </div>
+
+        <!-- Согласие (скрыто в режиме входа) -->
+        <div class="form-group" id="consent-group" style="display: none;">
+            <label class="consent-label">
+                <input type="checkbox" id="consent-checkbox" name="consent">
+                Я соглашаюсь на обработку персональных данных
+            </label>
+        </div>
+
+        <button type="submit" id="main-submit-btn" class="btn primary full-width">🔐 Войти</button>
+    </form>
+
+    <div class="toggle-block">
+        <p id="toggle-prompt">Ещё не ведете летопись?</p>
+        <a href="#" id="toggle-link">Зарегистрироваться</a>
+    </div>
+
+    {% if quote_text %}
+    <blockquote class="login-quote">«{{ quote_text }}»</blockquote>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="module" src="{{ url_for('static', path='js/pages/login.js') }}"></script>
+{% endblock %}

@@ -20,7 +20,7 @@ async def dashboard_page(
 
     return templates.TemplateResponse(
         request=request,
-        name="MainMenu.html",
+        name="pages/dashboard.html",
         context={
             "request": request,
             "username": current_user.get("username", "Путник"),

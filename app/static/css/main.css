@@ -1,0 +1,21 @@
+/* ============================================================
+   static/css/main.css
+   Точка входа — собираем все стили через @import.
+   Порядок важен: сначала переменные, потом сбросы, потом остальное.
+   ============================================================ */
+
+@import 'base/variables.css';
+@import 'base/reset.css';
+@import 'base/typography.css';
+@import 'base/scrollbar.css';
+
+/* Компоненты */
+@import 'components/buttons.css';
+@import 'components/card.css';
+@import 'components/modal.css';
+@import 'components/form.css';
+@import 'components/header.css';
+@import 'components/footer.css';
+@import 'components/navbar.css';
+
+/* Страничные стили подключаются в самих страницах через блок head */

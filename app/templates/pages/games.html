@@ -1,0 +1,130 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Мои игры | Folio{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', path='css/pages/games.css') }}">
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'components/sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+    <!-- Заголовок и действия -->
+    <div class="page-header-wrapper">
+        <div class="page-header">
+            <h1 class="page-title">🗺️ Мои кампании</h1>
+            <p class="page-subtitle">Управляйте мирами, которые вы создали, и приключениями, в которых участвуете.</p>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-outline" onclick="openModal('modal-join')">🚪 Присоединиться</button>
+            <button class="btn btn-primary" onclick="openModal('modal-create')">📜 Создать игру</button>
+        </div>
+    </div>
+
+    <!-- Flash-сообщения -->
+    {% include 'partials/flash_messages.html' %}
+
+    <!-- Секция: Мастер -->
+    <section class="games-section">
+        <h2 class="section-title">👑 Игры, которые я веду</h2>
+        <div class="games-grid">
+            {% if master_rooms %}
+                {% for room in master_rooms %}
+                <article class="game-card">
+                    <div class="game-header">
+                        <h4 class="game-title">{{ room.name }}</h4>
+                        <span class="game-status {% if room.active %}active{% else %}inactive{% endif %}"></span>
+                    </div>
+                    <div class="game-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Игроков:</span>
+                            <span class="meta-value">0 / {{ room.max_players }}</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Код приглашения:</span>
+                            <span class="code-box">{{ room.invite_code }}</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Статус:</span>
+                            <span class="meta-value">{{ 'Активна' if room.active else 'Закрыта' }}</span>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <a href="/master/room/{{ room.id }}" class="btn-card enter">🎯 Войти как Мастер</a>
+                        <a href="/master/prep/{{ room.id }}" class="btn-card">⚙️</a>
+                    </div>
+                </article>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-icon">🗺️</div>
+                    <p>У вас пока нет созданных миров.</p>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Секция: Игрок -->
+    <section class="games-section">
+        <h2 class="section-title">⚔️ Игры, в которых я участвую</h2>
+        <div class="games-grid">
+            {% if player_rooms %}
+                {% for room in player_rooms %}
+                <article class="game-card">
+                    <div class="game-header">
+                        <h4 class="game-title">{{ room.name }}</h4>
+                        <span class="game-status active"></span>
+                    </div>
+                    <div class="game-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Мастер:</span>
+                            <span class="meta-value">...</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Мой персонаж:</span>
+                            <span class="meta-value" style="color: var(--accent-gold);">{{ room.char_name }}</span>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <a href="/player/room/{{ room.id }}" class="btn-card enter">Войти в игру</a>
+                        <a href="#" class="btn-card" title="Покинуть группу" style="flex: 0.3; color: var(--accent-red);">🚪</a>
+                    </div>
+                </article>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-icon">🏕️</div>
+                    <p>Вы пока не присоединились ни к одной кампании.</p>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Модальные окна -->
+    {% include 'components/modal.html' with {
+        'modal_id': 'modal-create',
+        'modal_title': 'Создать новую игру',
+        'modal_form_action': '/master/room/create',
+        'modal_fields': [
+            {'name': 'name', 'label': 'Название кампании', 'type': 'text', 'placeholder': 'Проклятие Страда...', 'required': true},
+            {'name': 'max_players', 'label': 'Количество игроков (макс. 10)', 'type': 'number', 'required': true}
+        ],
+        'modal_submit_text': 'Создать чертог'
+    } %}
+
+    {% include 'components/modal.html' with {
+        'modal_id': 'modal-join',
+        'modal_title': 'Присоединиться к игре',
+        'modal_form_action': '/room/join',
+        'modal_fields': [
+            {'name': 'invite_code', 'label': 'Код приглашения', 'type': 'text', 'placeholder': 'Например: aB3xY9', 'required': true}
+        ],
+        'modal_submit_text': 'Войти в комнату'
+    } %}
+{% endblock %}
+
+{% block scripts %}
+    <script type="module" src="{{ url_for('static', path='js/pages/games.js') }}"></script>
+{% endblock %}

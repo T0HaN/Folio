@@ -1,0 +1,49 @@
+/* ============================================================
+   components/card.css
+   Базовая карточка и сетка карточек.
+   ============================================================ */
+
+.card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.card:hover {
+    background: var(--bg-surface-hover);
+    border-color: var(--accent-gold-dim);
+}
+
+.card-title {
+    font-family: var(--font-main);
+    font-size: 1.1rem;
+    color: var(--accent-gold);
+}
+
+.card-body {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    flex: 1;
+}
+
+.card-link {
+    color: var(--accent-gold);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.card-link:hover {
+    text-decoration: underline;
+}
+
+/* Сетка для списков карточек */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}

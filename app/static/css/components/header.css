@@ -1,0 +1,53 @@
+/* ============================================================
+   components/header.css
+   Стили для верхней панели (header) на страницах.
+   ============================================================ */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.header-logo {
+    font-family: var(--font-runic);
+    font-size: 1.8rem;
+    color: var(--accent-gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.header-logo img {
+    height: 50px;
+    width: auto;
+    filter: brightness(1.1) drop-shadow(0 0 6px rgba(201, 169, 97, 0.3));
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+    .header-actions {
+        justify-content: center;
+    }
+}

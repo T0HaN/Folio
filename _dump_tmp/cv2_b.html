@@ -1,0 +1,140 @@
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <p style="color: var(--text-secondary); text-align: center; padding: 0.6rem; font-size: 0.9rem;">Оружие не экипировано</p>
+                            {% endif %}
+
+                            <!-- Броня -->
+                            {% set equipped_armor = char.inventory.armor | selectattr('equipped', 'equalto', true) | list %}
+                            {% if equipped_armor %}
+                                {% for a in equipped_armor %}
+                                <div class="armor-item" style="margin-top: 0.75rem;">
+                                    <div class="armor-name">🛡️ {{ a.name }}</div>
+                                    <div class="armor-stats">
+                                        КД: {{ a.ac }}
+                                        {% if a.strength_req %} • Требуется: {{ a.strength_req }}{% endif %}
+                                        {% if a.stealth %} • <span style="color: var(--accent-red);">⚠️ {{ a.stealth }}</span>{% endif %}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+                        </section>
+
+                        <!-- Навигация -->
+                        <section class="section">
+                            <h2 class="section-title">Навигация</h2>
+                            <div class="nav-buttons">
+                                <a href="/char/{{ char.id }}/description" class="nav-btn">📜 Описание</a>
+                                <a href="/char/{{ char.id }}/inventory" class="nav-btn">🎒 Инвентарь</a>
+                                <a href="/char/{{ char.id }}/features" class="nav-btn">⚔️ Навыки</a>
+                                <a href="/char/{{ char.id }}/spells" class="nav-btn">📚 Заклинания</a>
+                                <!-- В блоке "Навигация" добавь эту кнопку -->
+                                <a href="/char/{{ char.id }}/edit" class="nav-btn">✏️ Редактировать</a>
+                                {% if current_user and current_user.role == 'player' %}
+                                <a href="/player/join?char_id={{ char.id }}" class="nav-btn primary" style="grid-column: span 2;">🔗 Подключиться к комнате</a>
+                                {% endif %}
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <footer class="sheet-footer">
+                    «Не все бродящие по свету потеряны» — <em>Дж. Р. Р. Толкин</em>
+                </footer>
+            </div>
+        </div>
+
+        <!-- ===== ПАНЕЛЬ БРОСКОВ СПРАВА ===== -->
+        <aside class="dice-panel" id="dicePanel">
+            <div class="dice-panel-header">
+                <div class="dice-panel-title">🎲 Броски</div>
+                <div class="dice-panel-subtitle">Кликай по блокам для броска</div>
+            </div>
+            <div class="dice-log" id="diceLog">
+                <div class="dice-empty">
+                    <div class="icon">🎲</div>
+                    <div>Кликни по характеристике,<br>навыку или оружию<br>для совершения броска</div>
+                </div>
+            </div>
+            <button class="dice-clear-btn" onclick="clearDiceLog()">🗑️ Очистить историю</button>
+        </aside>
+    </div>
+
+    <script>
+        function parseDice(diceStr) {
+            const match = diceStr.match(/(\d+)к(\d+)/i) || diceStr.match(/(\d+)d(\d+)/i);
+            if (!match) return { count: 1, sides: 4 };
+            return { count: parseInt(match[1]), sides: parseInt(match[2]) };
+        }
+
+        function rollDice(count, sides) {
+            const rolls = [];
+            for (let i = 0; i < count; i++) {
+                rolls.push(Math.floor(Math.random() * sides) + 1);
+            }
+            return rolls;
+        }
+
+        function formatMod(mod) {
+            return mod >= 0 ? `+${mod}` : `${mod}`;
+        }
+
+        function getTimeStr() {
+            return new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        }
+
+        function addDiceEntry(type, name, rolls, modifier, total, formula, extra) {
+            const log = document.getElementById('diceLog');
+            const empty = log.querySelector('.dice-empty');
+            if (empty) empty.remove();
+
+            const isCrit = rolls.length === 1 && rolls[0] === 20;
+            const isFail = rolls.length === 1 && rolls[0] === 1;
+
+            const rollsStr = rolls.join(' + ');
+            const critClass = isCrit ? 'dice-crit' : '';
+            const failClass = isFail ? 'dice-fail' : '';
+
+            const entry = document.createElement('div');
+            entry.className = 'dice-entry';
+            entry.innerHTML = `
+                <div class="dice-entry-header">
+                    <span class="dice-entry-type">${type}</span>
+                    <span class="dice-entry-time">${getTimeStr()}</span>
+                </div>
+                <div class="dice-entry-name">${name}</div>
+                <div class="dice-entry-result">
+                    <span class="dice-rolls ${critClass} ${failClass}">[${rollsStr}]</span>
+                    <span class="dice-modifier">${formatMod(modifier)}</span>
+                </div>
+                <div class="dice-entry-result">
+                    <span class="dice-total">${total}</span>
+                    <span class="dice-formula">${formula}</span>
+                </div>
+                ${extra ? `<div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.3rem;">${extra}</div>` : ''}
+                ${isCrit ? '<div style="font-size: 0.85rem; color: var(--accent-green); font-weight: bold;">🎯 КРИТИЧЕСКИЙ УСПЕХ!</div>' : ''}
+                ${isFail ? '<div style="font-size: 0.85rem; color: var(--accent-red); font-weight: bold;">💀 КРИТИЧЕСКИЙ ПРОВАЛ!</div>' : ''}
+            `;
+            log.insertBefore(entry, log.firstChild);
+
+            while (log.children.length > 20) {
+                log.removeChild(log.lastChild);
+            }
+        }
+
+        function clearDiceLog() {
+            const log = document.getElementById('diceLog');
+            log.innerHTML = `
+                <div class="dice-empty">
+                    <div class="icon">🎲</div>
+                    <div>Кликни по характеристике,<br>навыку или оружию<br>для совершения броска</div>
+                </div>
+            `;
+        }
+
+        function rollStatCheck(statName, modifier) {
+            const d20 = Math.floor(Math.random() * 20) + 1;
+            const total = d20 + modifier;
+            addDiceEntry('Проверка', `Характеристика: ${statName}`, [d20], modifier, total, `1к20 ${formatMod(modifier)} = ${total}`);
+        }

@@ -1,0 +1,11 @@
+<!--
+  partials/flash_messages.html
+  Подключать с помощью {% include 'partials/flash_messages.html' %}
+-->
+{% if messages %}
+<div class="messages">
+    {% for msg in messages %}
+    <div class="msg msg-{{ msg.category }}" role="alert">{{ msg.text }}</div>
+    {% endfor %}
+</div>
+{% endif %}

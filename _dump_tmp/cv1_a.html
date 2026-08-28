@@ -1,0 +1,226 @@
+        }
+        .char-identity { text-align: right; min-width: 280px; }
+        .char-name {
+            font-size: 1.8rem;
+            color: var(--accent-gold);
+            font-weight: bold;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+        .char-level-badge {
+            display: inline-block;
+            background: linear-gradient(145deg, var(--accent-gold), var(--accent-gold-dim));
+            color: var(--bg-primary);
+            padding: 0.25rem 1rem;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .back-link {
+            color: var(--accent-gold-dim);
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+        .back-link:hover { color: var(--accent-gold); border-color: var(--accent-gold-dim); }
+
+        .char-info-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            padding: 2rem;
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .info-item { text-align: center; }
+        .info-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.25rem;
+        }
+        .info-value {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--accent-gold);
+        }
+
+        .sheet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+        @media (max-width: 768px) { .sheet-grid { grid-template-columns: 1fr; } }
+
+        .column { padding: 1.5rem; border-right: 1px solid var(--border-color); }
+        .column:last-child { border-right: none; }
+        @media (max-width: 768px) {
+            .column { border-right: none; border-bottom: 1px solid var(--border-color); }
+            .column:last-child { border-bottom: none; }
+        }
+
+        .section { margin-bottom: 1.5rem; }
+        .section-title {
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Характеристики */
+        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+        .stat-box {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .stat-box:hover {
+            border-color: var(--accent-gold-dim);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(201, 169, 97, 0.2);
+        }
+        .stat-box::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+        }
+        .stat-name {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.25rem;
+        }
+        .stat-score { font-size: 1.8rem; font-weight: bold; color: var(--text-primary); line-height: 1; }
+        .stat-mod { font-size: 1.1rem; font-weight: bold; color: var(--accent-gold); }
+
+        /* Навыки и спасброски */
+        .skill-list { display: flex; flex-direction: column; gap: 0.4rem; }
+        .skill-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.4rem 0.6rem;
+            background: var(--bg-primary);
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .skill-item:hover { background: var(--bg-tertiary); transform: translateX(3px); }
+        .skill-item.proficient {
+            border-left: 2px solid var(--accent-gold);
+            background: rgba(201, 169, 97, 0.08);
+        }
+        .skill-name { color: var(--text-primary); }
+        .skill-mod { font-weight: bold; color: var(--accent-gold); font-family: var(--font-main); }
+
+        /* Здоровье */
+        .hp-box {
+            background: var(--bg-primary);
+            border: 2px solid var(--accent-red);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .hp-current { font-size: 2rem; font-weight: bold; color: var(--accent-red); }
+        .hp-label { color: var(--text-secondary); font-size: 0.85rem; }
+        .hp-temp { margin-top: 0.5rem; font-size: 0.9rem; color: var(--accent-gold-dim); }
+
+        .attr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+        .attr-item {
+            background: var(--bg-primary);
+            padding: 0.5rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        .attr-label { color: var(--text-secondary); font-size: 0.8rem; }
+        .attr-value { font-weight: bold; color: var(--text-primary); }
+
+        .ac-card {
+            background: linear-gradient(145deg, var(--accent-gold-dim), var(--bg-tertiary));
+            border: 2px solid var(--accent-gold);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .ac-value {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--bg-primary);
+            font-family: var(--font-main);
+            line-height: 1;
+        }
+        .ac-label {
+            color: var(--bg-primary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+
+        /* ===== АКТИВНЫЙ ИНВЕНТАРЬ ===== */
+        .active-inventory { margin-bottom: 1.5rem; }
+        .weapon-item {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-bottom: 0.75rem;
+            transition: border-color 0.2s;
+        }
+        .weapon-item:hover { border-color: var(--accent-gold-dim); }
+        .weapon-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .weapon-name { font-weight: 600; color: var(--accent-gold); font-size: 1rem; }
+        .weapon-proficient {
+            font-size: 0.75rem;
+            color: var(--accent-green);
+            padding: 0.15rem 0.5rem;
+            background: rgba(74, 107, 74, 0.2);
+            border-radius: 3px;
+        }
+        .weapon-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+        .roll-block {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 0.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .roll-block:hover {
+            background: rgba(201, 169, 97, 0.1);
+            border-color: var(--accent-gold-dim);
+            transform: translateY(-1px);
+        }
+        .roll-block:active { transform: translateY(0); }
+        .roll-label {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.2rem;
+        }
+        .roll-value {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--accent-gold);

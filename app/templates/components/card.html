@@ -1,0 +1,42 @@
+<!--
+  components/card.html
+  Универсальная карточка (переиспользуется для персонажей, комнат и т.д.)
+
+  Параметры (через include with {...}):
+    - card_title:   заголовок/название
+    - card_subtitle: подзаголовок (опционально)
+    - card_icon:     эмодзи/иконка перед заголовком (опционально)
+    - card_class:    дополнительные CSS-классы (опционально)
+    - card_actions:  массив dict: {'label': '...', 'url': '...', 'method': 'POST'|None,
+                     'confirm': 'текст подтверждения'|None, 'class': 'btn-action ...'}
+-->
+<article class="card {% if card_class %}{{ card_class }}{% endif %}">
+    {% if card_icon or card_title %}
+    <div class="card-header">
+        {% if card_icon %}<span class="card-icon">{{ card_icon }}</span>{% endif %}
+        {% if card_title %}<h3 class="card-title">{{ card_title }}</h3>{% endif %}
+    </div>
+    {% endif %}
+
+    {% if card_subtitle %}
+    <p class="card-desc">{{ card_subtitle }}</p>
+    {% endif %}
+
+    {% if card_body %}
+    <div class="card-body">{{ card_body | safe }}</div>
+    {% endif %}
+
+    {% if card_actions %}
+    <div class="action-list">
+        {% for action in card_actions %}
+            {% if action.method == 'POST' %}
+            <form method="POST" action="{{ action.url }}" {% if action.confirm %}onsubmit="return confirm('{{ action.confirm | e }}')"{% endif %}>
+                <button type="submit" class="{{ action.class or 'btn-action' }}">{{ action.label }}</button>
+            </form>
+            {% else %}
+            <a href="{{ action.url }}" class="{{ action.class or 'btn-action' }}">{{ action.label }}</a>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+</article>

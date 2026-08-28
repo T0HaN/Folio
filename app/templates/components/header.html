@@ -1,0 +1,26 @@
+<!--
+  components/header.html
+  Верхняя панель страницы: логотип + произвольный контент справа.
+
+  Параметры:
+    - header_logo_url: ссылка на логотип (по умолчанию '/')
+    - header_logo_img: путь к картинке логотипа (опционально, если есть img)
+    - header_logo_text: текст логотипа/бренда (если нет картинки)
+    - header_actions: HTML-контент для правой части (вставляется как is-safe)
+-->
+<header class="header">
+    <div class="header-brand">
+        <a href="{{ header_logo_url or '/' }}" class="header-logo">
+            {% if header_logo_img %}
+            <img src="{{ url_for('static', path=header_logo_img) }}" alt="{{ header_logo_text or 'Folio' }}">
+            {% else %}
+            {{ header_logo_text or 'Folio' }}
+            {% endif %}
+        </a>
+    </div>
+    <div class="header-actions">
+        {% if header_actions %}
+            {{ header_actions | safe }}
+        {% endif %}
+    </div>
+</header>
