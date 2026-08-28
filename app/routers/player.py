@@ -14,7 +14,7 @@ from app.services.character_service import CharacterService
 from app.services.room_service import RoomService
 from app.services.spell_service import SpellService
 from app.services.combat_service import CombatService
-from app.utils import get_db_connection
+from app.utils import get_db_connection, load_chars, normalize_char
 from app.sse import add_sse_listener, remove_sse_listener, broadcast_room_event
 import psycopg2
 

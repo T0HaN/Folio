@@ -23,6 +23,9 @@ from app.utils import (
 )
 from app.routers.websockets import broadcast_ws_event
 
+# Глобальный экземпляр CharacterService
+character_service = CharacterService()
+
 router = APIRouter(tags=["Characters"])
 
 # ============================================================

@@ -16,9 +16,20 @@ from app.services.combat_service import CombatService
 from app.services.file_service import FileService
 from app.services.character_service import CharacterService
 from app.schemas.constants import XP_THRESHOLDS
-from app.utils import get_db_connection, get_random_quote
+from app.utils import (
+    get_db_connection, get_random_quote,
+    load_chars, normalize_char, get_level_progress,
+    get_class_features, prepare_skills_and_saves,
+    save_chars, calc_level_from_xp, calc_prof_bonus,
+    get_all_monsters, get_redis_room_state, save_redis_room_state,
+    upload_image_to_s3,
+)
 from app.sse import add_sse_listener, remove_sse_listener, broadcast_room_event
 from app.routers.websockets import broadcast_ws_event
+
+# Глобальные экземпляры сервисов (используются напрямую в ряде эндпоинтов)
+character_service = CharacterService()
+room_service = RoomService()
 
 router = APIRouter(tags=["Master"])
 

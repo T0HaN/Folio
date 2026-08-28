@@ -1,0 +1,172 @@
+================================================================================
+1. НЕОПРЕДЕЛЁННЫЕ ИМЕНА (потенциальные NameError)
+================================================================================
+
+--- app\main.py ---
+  строка 66: origin  [module]
+  строка 164: uvicorn  [module]
+
+--- app\routers\characters.py ---
+  строка 52: character_service  [module.chars_list]
+  строка 105: character_service  [module.create_character]
+  строка 157: character_service  [module.create_character]
+  строка 193: character_service  [module.create_character]
+  строка 123: character_service  [module.create_character]
+  строка 207: character_service  [module.view_char]
+  строка 208: character_service  [module.view_char]
+  строка 210: character_service  [module.view_char]
+  строка 211: character_service  [module.view_char]
+  строка 215: character_service  [module.view_char]
+  строка 236: character_service  [module.edit_char_page]
+  строка 255: character_service  [module.save_char_edit]
+  строка 313: character_service  [module.save_char_edit]
+  строка 301: character_service  [module.save_char_edit]
+  строка 282: character_service  [module.save_char_edit]
+  строка 322: character_service  [module.save_char_edit]
+  строка 385: character_service  [module.upload_token]
+  строка 432: character_service  [module.upload_token]
+  строка 440: character_service  [module.remove_token]
+  строка 445: character_service  [module.remove_token]
+  строка 453: character_service  [module.view_description]
+  строка 616: character_service  [module.buy_equipment]
+  строка 621: character_service  [module.buy_equipment]
+  строка 762: character_service  [module.buy_equipment]
+  строка 643: character_service  [module.buy_equipment]
+  строка 644: character_service  [module.buy_equipment]
+  строка 646: character_service  [module.buy_equipment]
+  строка 774: character_service  [module.add_custom_equipment]
+  строка 780: character_service  [module.add_custom_equipment]
+  строка 842: character_service  [module.add_custom_equipment]
+  строка 853: character_service  [module.delete_armor]
+  строка 857: character_service  [module.delete_armor]
+  строка 861: character_service  [module.delete_armor]
+  строка 870: character_service  [module.delete_gear]
+  строка 874: character_service  [module.delete_gear]
+  строка 878: character_service  [module.delete_gear]
+  строка 887: character_service  [module.decrease_gear]
+  строка 891: character_service  [module.decrease_gear]
+  строка 900: character_service  [module.decrease_gear]
+  строка 910: character_service  [module.update_coins]
+  строка 915: character_service  [module.update_coins]
+  строка 943: character_service  [module.update_coins]
+  строка 983: character_service  [module.add_weapon]
+  строка 987: character_service  [module.add_weapon]
+  строка 997: character_service  [module.add_weapon]
+  строка 1006: character_service  [module.delete_weapon]
+  строка 1011: character_service  [module.delete_weapon]
+  строка 1020: character_service  [module.view_spells]
+  строка 1080: character_service  [module.learn_spell]
+  строка 1084: character_service  [module.learn_spell]
+  строка 1089: character_service  [module.learn_spell]
+  строка 1098: character_service  [module.forget_spell]
+  строка 1102: character_service  [module.forget_spell]
+  строка 1106: character_service  [module.forget_spell]
+  строка 1115: character_service  [module.view_class_features]
+  строка 1116: character_service  [module.view_class_features]
+  строка 1137: character_service  [module.delete_character]
+  строка 1142: character_service  [module.delete_character]
+
+--- app\routers\master.py ---
+  строка 52: character_service  [module.games_dashboard]
+  строка 79: traceback  [module.games_dashboard]
+  строка 216: load_chars  [module.master_room]
+  строка 219: normalize_char  [module.master_room]
+  строка 221: get_level_progress  [module.master_room]
+  строка 232: get_redis_room_state  [module.master_room]
+  строка 277: load_chars  [module.master_view_character]
+  строка 283: normalize_char  [module.master_view_character]
+  строка 284: get_class_features  [module.master_view_character]
+  строка 292: prepare_skills_and_saves  [module.master_view_character]
+  строка 316: traceback  [module.master_view_character]
+  строка 429: load_chars  [module.master_rewards_page]
+  строка 434: normalize_char  [module.master_rewards_page]
+  строка 503: load_chars  [module.master_reward]
+  строка 523: save_chars  [module.master_reward]
+  строка 511: calc_level_from_xp  [module.master_reward]
+  строка 514: calc_prof_bonus  [module.master_reward]
+  строка 546: get_all_monsters  [module.master_prep]
+  строка 581: get_redis_room_state  [module.save_monster_prep]
+  строка 583: save_redis_room_state  [module.save_monster_prep]
+  строка 607: upload_image_to_s3  [module.api_upload_scene]
+  строка 614: get_redis_room_state  [module.api_upload_scene]
+  строка 618: save_redis_room_state  [module.api_upload_scene]
+  строка 644: room_service  [module.api_get_scenes]
+  строка 659: room_service  [module.api_activate_scene]
+  строка 667: get_redis_room_state  [module.api_activate_scene]
+  строка 671: save_redis_room_state  [module.api_activate_scene]
+  строка 686: room_service  [module.api_delete_scene]
+  строка 691: get_redis_room_state  [module.api_delete_scene]
+  строка 695: save_redis_room_state  [module.api_delete_scene]
+
+--- app\routers\player.py ---
+  строка 64: load_chars  [module.player_room]
+  строка 76: normalize_char  [module.player_room]
+  строка 202: load_chars  [module.use_ammo]
+  строка 212: normalize_char  [module.use_ammo]
+  строка 224: save_chars  [module.use_ammo]
+
+--- app\routers\websockets.py ---
+  строка 55: load_rooms  [module.room_websocket]
+  строка 75: get_redis_room_state  [module.room_websocket]
+  строка 155: get_redis_room_state  [module.room_websocket]
+  строка 444: key  [module.room_websocket]
+  строка 446: load_rooms  [module.room_websocket]
+  строка 457: rid  [module.room_websocket]
+  строка 459: uname  [module.room_websocket]
+  строка 460: cname  [module.room_websocket]
+  строка 208: save_redis_room_state  [module.room_websocket]
+  строка 453: room_service  [module.room_websocket]
+  строка 447: rid  [module.room_websocket]
+  строка 451: uname  [module.room_websocket]
+  строка 221: save_redis_room_state  [module.room_websocket]
+  строка 229: save_redis_room_state  [module.room_websocket]
+  строка 244: save_redis_room_state  [module.room_websocket]
+  строка 253: save_redis_room_state  [module.room_websocket]
+  строка 260: save_redis_room_state  [module.room_websocket]
+  строка 277: save_redis_room_state  [module.room_websocket]
+  строка 310: save_redis_room_state  [module.room_websocket]
+  строка 339: save_redis_room_state  [module.room_websocket]
+  строка 369: save_redis_room_state  [module.room_websocket]
+  строка 417: save_redis_room_state  [module.room_websocket]
+  строка 321: random  [module.room_websocket]
+  строка 337: x  [module.room_websocket]
+  строка 396: save_redis_room_state  [module.room_websocket]
+
+--- app\services\room_service.py ---
+  строка 100: time  [module.RoomService]
+
+--- app\sse.py ---
+  строка 60: asyncio  [module.sse_generator]
+
+================================================================================
+2. ИМПОРТЫ НЕСУЩЕСТВУЮЩИХ ИМЁН ИЗ ЛОКАЛЬНЫХ МОДУЛЕЙ
+================================================================================
+  app\main.py:17: from app.routers import auth -> в модуле 'app.routers' нет имени 'auth'
+  app\main.py:17: from app.routers import characters -> в модуле 'app.routers' нет имени 'characters'
+  app\main.py:17: from app.routers import master -> в модуле 'app.routers' нет имени 'master'
+  app\main.py:17: from app.routers import player -> в модуле 'app.routers' нет имени 'player'
+  app\main.py:17: from app.routers import websockets -> в модуле 'app.routers' нет имени 'websockets'
+  app\main.py:17: from app.routers import dashboard -> в модуле 'app.routers' нет имени 'dashboard'
+  app\main.py:19: from app import utils -> в модуле 'app' нет имени 'utils'
+  app\repositories\character_repository.py:7: from app import utils -> в модуле 'app' нет имени 'utils'
+  app\repositories\room_repository.py:7: from app import utils -> в модуле 'app' нет имени 'utils'
+  app\repositories\user_repository.py:7: from app import utils -> в модуле 'app' нет имени 'utils'
+  app\routers\characters.py:9: from app import utils -> в модуле 'app' нет имени 'utils'
+  app\routers\master.py:13: from app import utils -> в модуле 'app' нет имени 'utils'
+  app\routers\player.py:12: from app import utils -> в модуле 'app' нет имени 'utils'
+  app\routers\websockets.py:8: from app import utils -> в модуле 'app' нет имени 'utils'
+  app\services\character_service.py:9: from app import utils -> в модуле 'app' нет имени 'utils'
+  app\services\combat_service.py:7: from app import utils -> в модуле 'app' нет имени 'utils'
+  app\services\file_service.py:8: from app import utils -> в модуле 'app' нет имени 'utils'
+  app\services\room_service.py:7: from app import utils -> в модуле 'app' нет имени 'utils'
+  app\services\spell_service.py:7: from app import utils -> в модуле 'app' нет имени 'utils'
+
+================================================================================
+3. АТРИБУТЫ ЛОКАЛЬНЫХ МОДУЛЕЙ (utils.xxx, settings.yyy)
+================================================================================
+  app\repositories\user_repository.py:15: utils.get_user_by_username: атрибут не найден в app.utils
+  app\repositories\user_repository.py:19: utils.create_user: атрибут не найден в app.utils
+
+================================================================================
+4. ЦИКЛИЧЕСКИЕ ИМПОРТЫ
+================================================================================

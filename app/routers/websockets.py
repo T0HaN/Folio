@@ -9,6 +9,10 @@ from app import utils  # Для доступа к глобальному redis_c
 from app.dependencies import unsign_session_data
 from app.services.room_service import RoomService
 from app.services.combat_service import CombatService
+from app.utils import load_rooms, get_redis_room_state, save_redis_room_state
+
+# Глобальный экземпляр RoomService
+room_service = RoomService()
 
 router = APIRouter(tags=["WebSockets"])
 
